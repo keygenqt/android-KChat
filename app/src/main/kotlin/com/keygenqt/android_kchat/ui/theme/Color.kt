@@ -14,20 +14,11 @@
  * limitations under the License.
  */
  
-package com.keygenqt.android_kchat
+package com.keygenqt.android_kchat.ui.theme
 
-import org.junit.Test
+import androidx.compose.ui.graphics.Color
 
-import org.junit.Assert.*
-
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-class ExampleUnitTest {
-    @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
-    }
-}
+val Purple200 = Color(0xFFBB86FC)
+val Purple500 = Color(0xFF6200EE)
+val Purple700 = Color(0xFF3700B3)
+val Teal200 = Color(0xFF03DAC5)

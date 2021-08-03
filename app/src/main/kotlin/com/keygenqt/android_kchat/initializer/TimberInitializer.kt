@@ -14,20 +14,22 @@
  * limitations under the License.
  */
  
-package com.keygenqt.android_kchat
+@file:Suppress("unused")
 
-import org.junit.Test
+package com.keygenqt.android_kchat.initializer
 
-import org.junit.Assert.*
+import android.content.Context
+import androidx.startup.Initializer
+import com.keygenqt.android_kchat.BuildConfig
+import timber.log.Timber
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-class ExampleUnitTest {
-    @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+class TimberInitializer : Initializer<Unit> {
+
+    override fun create(context: Context) {
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
     }
+
+    override fun dependencies(): List<Class<out Initializer<*>>> = emptyList()
 }

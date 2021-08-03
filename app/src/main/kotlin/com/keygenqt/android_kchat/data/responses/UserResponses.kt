@@ -13,21 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
-package com.keygenqt.android_kchat
 
-import org.junit.Test
+package com.keygenqt.android_kchat.data.responses
 
-import org.junit.Assert.*
+import androidx.compose.runtime.Immutable
+import androidx.room.PrimaryKey
+import kotlinx.serialization.Serializable
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-class ExampleUnitTest {
-    @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
-    }
-}
+@Immutable
+@Serializable
+data class UserResponses(
+    @PrimaryKey val id: Long,
+    val login: String,
+    val avatar_url: String,
+    val followers_url: String,
+    val repos_url: String,
+    val name: String,
+    val bio: String?,
+    val created_at: String
+)

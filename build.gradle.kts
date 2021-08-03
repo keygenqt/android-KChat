@@ -1,7 +1,8 @@
 buildscript {
 
-    val versionHiltCore: String by project
-    val versionGoogleServices: String by project
+    val kotlinVersion: String by project
+    val gradleVersion: String by project
+    val hiltCoreVersion: String by project
 
     repositories {
         google()
@@ -9,8 +10,9 @@ buildscript {
     }
 
     dependencies {
-        classpath("com.google.gms:google-services:$versionGoogleServices")
-        classpath("com.google.dagger:hilt-android-gradle-plugin:$versionHiltCore")
+        classpath("com.android.tools.build:gradle:$gradleVersion")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
+        classpath("com.google.dagger:hilt-android-gradle-plugin:$hiltCoreVersion")
     }
 }
 

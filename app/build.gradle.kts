@@ -1,8 +1,28 @@
-val versionCompose: String by project
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+
+    kotlin("kapt")
+
+    // https://dagger.dev/hilt/
+    id("dagger.hilt.android.plugin")
+    // https://github.com/Kotlin/kotlinx.serialization
+    kotlin("plugin.serialization")
+    // https://github.com/google/ksp
+    id("com.google.devtools.ksp")
+    // https://github.com/diffplug/spotless
+    id("com.diffplug.spotless")
+}
+
+spotless {
+    kotlin {
+        target("**/*.kt")
+        licenseHeaderFile("${project.projectDir}/../spotless.license")
+    }
+    kotlinGradle {
+        target("*.gradle.kts")
+        ktlint()
+    }
 }
 
 android {
@@ -34,21 +54,52 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = versionCompose
+        kotlinCompilerExtensionVersion = project.property("composeVersion") as String
     }
 }
 
-
 dependencies {
-    implementation("androidx.core:core-ktx:1.6.0")
-    implementation("androidx.compose.ui:ui:$versionCompose")
-    implementation("androidx.compose.material:material:$versionCompose")
-    implementation("androidx.compose.ui:ui-tooling-preview:$versionCompose")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
-    implementation("androidx.activity:activity-compose:1.3.0")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:$versionCompose")
-    debugImplementation("androidx.compose.ui:ui-tooling:$versionCompose")
+
+    val composeVersion: String by project
+    val ktorVersion: String by project
+    val roomVersion: String by project
+    val hiltCoreVersion: String by project
+    val hiltVersion: String by project
+    val hiltComposeNavigationVersion: String by project
+    val timberVersion: String by project
+    val startupVersion: String by project
+    val coreKtxVersion: String by project
+    val activityComposeVersion: String by project
+
+    // base
+    implementation("androidx.core:core-ktx:$coreKtxVersion")
+
+    // ktor
+    implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
+    implementation("io.ktor:ktor-client-json:$ktorVersion")
+    implementation("io.ktor:ktor-client-serialization-jvm:$ktorVersion")
+    implementation("io.ktor:ktor-client-logging-jvm:$ktorVersion")
+
+    // room
+    implementation("androidx.room:room-runtime:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
+    ksp("androidx.room:room-compiler:$roomVersion")
+
+    // hilt
+    implementation("com.google.dagger:hilt-android:$hiltCoreVersion")
+    kapt("com.google.dagger:hilt-compiler:$hiltCoreVersion")
+    kapt("androidx.hilt:hilt-compiler:$hiltVersion")
+    implementation("androidx.hilt:hilt-navigation-compose:$hiltComposeNavigationVersion")
+
+    // compose
+    implementation("androidx.compose.ui:ui:$composeVersion")
+    implementation("androidx.compose.material:material:$composeVersion")
+    implementation("androidx.compose.ui:ui-tooling-preview:$composeVersion")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeVersion")
+    debugImplementation("androidx.compose.ui:ui-tooling:$composeVersion")
+    implementation("androidx.activity:activity-compose:$activityComposeVersion")
+
+    // other
+    implementation("com.jakewharton.timber:timber:$timberVersion")
+    implementation("androidx.startup:startup-runtime:$startupVersion")
 }
