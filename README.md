@@ -1,4 +1,4 @@
-KChat
+KChat (client)
 ===================
 
 ![picture](data/preview.png)
