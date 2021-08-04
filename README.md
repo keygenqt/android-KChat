@@ -1,6 +1,8 @@
 KChat
 ===================
 
+![picture](data/preview.png)
+
 Chat using websocket for data transfer, consisting of 2 parts - [backend](https://github.com/keygenqt/api-KChat) and client.
 
 ### Client base info

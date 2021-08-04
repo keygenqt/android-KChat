@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 package com.keygenqt.android_kchat.di
 
-import android.content.Context
+import com.keygenqt.android_kchat.base.RestHttpClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.ktor.client.*
 import io.ktor.client.engine.okhttp.*
@@ -35,7 +34,7 @@ import timber.log.Timber
 
 @Module
 @InstallIn(SingletonComponent::class)
-object ModuleHttpClient {
+object HttpClientModule {
 
     private val json = Json {
         ignoreUnknownKeys = true
@@ -44,6 +43,7 @@ object ModuleHttpClient {
     }
 
     @Provides
+    @RestHttpClient
     fun provideHttpClient(): HttpClient {
         return HttpClient(OkHttp) {
             // Json

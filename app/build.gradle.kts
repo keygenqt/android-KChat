@@ -33,7 +33,7 @@ android {
 
         applicationId = "com.keygenqt.android_kchat"
 
-        minSdk = 21
+        minSdk = 23
         targetSdk = 31
         versionCode = 1
         versionName = "1.0.0"
@@ -75,6 +75,7 @@ dependencies {
     implementation("androidx.core:core-ktx:$coreKtxVersion")
 
     // ktor
+    implementation("io.ktor:ktor-client-websockets:$ktorVersion")
     implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
     implementation("io.ktor:ktor-client-json:$ktorVersion")
     implementation("io.ktor:ktor-client-serialization-jvm:$ktorVersion")

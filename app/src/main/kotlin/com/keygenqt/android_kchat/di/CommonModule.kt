@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
-package com.keygenqt.android_kchat
+package com.keygenqt.android_kchat.di
 
-import android.app.Application
-import dagger.hilt.android.HiltAndroidApp
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 
-@HiltAndroidApp
-class App : Application()
+@Module
+@InstallIn(SingletonComponent::class)
+object CommonModule

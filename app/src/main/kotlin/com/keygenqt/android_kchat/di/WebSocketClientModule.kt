@@ -14,10 +14,25 @@
  * limitations under the License.
  */
 
-package com.keygenqt.android_kchat
+package com.keygenqt.android_kchat.di
 
-import android.app.Application
-import dagger.hilt.android.HiltAndroidApp
+import com.keygenqt.android_kchat.base.WebSocketClient
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import io.ktor.client.*
+import io.ktor.client.features.websocket.*
 
-@HiltAndroidApp
-class App : Application()
+@Module
+@InstallIn(SingletonComponent::class)
+object WebSocketClientModule {
+
+    @Provides
+    @WebSocketClient
+    fun provideWebSocketClient(): HttpClient {
+        return HttpClient {
+            install(WebSockets)
+        }
+    }
+}
