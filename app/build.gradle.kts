@@ -86,6 +86,7 @@ dependencies {
     val firebaseBomVersion: String by project
     val accompanistVersion: String by project
     val gsonVersion: String by project
+    val constraintLayoutComposeVersion: String by project
 
     // base
     implementation("androidx.core:core-ktx:$coreKtxVersion")
@@ -124,9 +125,11 @@ dependencies {
     implementation("androidx.compose.ui:ui:$composeVersion")
     implementation("androidx.compose.material:material:$composeVersion")
     implementation("androidx.compose.ui:ui-tooling-preview:$composeVersion")
+    implementation("androidx.constraintlayout:constraintlayout-compose:$constraintLayoutComposeVersion")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeVersion")
     debugImplementation("androidx.compose.ui:ui-tooling:$composeVersion")
     implementation("androidx.activity:activity-compose:$activityComposeVersion")
+    implementation("androidx.compose.material:material-icons-extended:$composeVersion")
 
     // other
     implementation("com.jakewharton.timber:timber:$timberVersion")

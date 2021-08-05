@@ -18,6 +18,7 @@ package com.keygenqt.kchat.modules.common.navigation
 
 import android.widget.Toast
 import androidx.compose.runtime.*
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -35,6 +36,7 @@ import com.keygenqt.kchat.modules.guest.ui.events.WelcomeEvents
 import com.keygenqt.kchat.modules.guest.ui.viewModels.GuestViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalComposeUiApi
 @ExperimentalCoroutinesApi
 @Composable
 fun GuestNavGraph(navController: NavHostController) {
@@ -88,10 +90,11 @@ fun GuestNavGraph(navController: NavHostController) {
                         is LoginEvents.Login -> viewModel.login(event.email, event.password) {
                             localBaseViewModel.startUser()
                         }
-                        is LoginEvents.LoginGoogle -> viewModel.loginGoogle(event.email, event.idToken) {
+                        is LoginEvents.LoginGoogle -> viewModel.loginGoogle(event.idToken) {
                             localBaseViewModel.startUser()
                         }
                         is LoginEvents.NavigateBack -> navActions.upPress.invoke()
+                        is LoginEvents.ClearViewModel -> viewModel.clear()
                     }
                 }
             }

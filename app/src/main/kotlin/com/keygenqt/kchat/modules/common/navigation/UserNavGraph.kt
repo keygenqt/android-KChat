@@ -59,20 +59,20 @@ fun UserNavGraph(navController: NavHostController) {
             composable(UserNavScreen.ListChats.route) {
                 ListChatsScreen(viewModel = hiltViewModel()) { event ->
                     when (event) {
-                        is ListChatsEvents.NavigateBack -> navActions.upPress
+                        is ListChatsEvents.ToSettings -> navActions.navigateToSettings()
+                        is ListChatsEvents.Logout -> localBaseViewModel.logout()
                     }
                 }
             }
             composable(UserNavScreen.Settings.route) {
                 SettingsScreen(viewModel = hiltViewModel()) { event ->
                     when (event) {
-                        is SettingsEvents.NavigateBack -> navActions.upPress
+                        is SettingsEvents.NavigateBack -> navActions.upPress.invoke()
                     }
                 }
             }
         }
     }
-
 }
 
 

@@ -16,8 +16,10 @@
 
 package com.keygenqt.kchat.modules.common.ui.viewModels
 
+import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,6 +34,7 @@ import javax.inject.Inject
 class ViewModelMain @Inject constructor(
     remoteConfig: FirebaseRemoteConfig,
     private val firebaseAuth: FirebaseAuth,
+    private val analytics: FirebaseAnalytics,
 ) : ViewModel() {
 
     private val _isReady: MutableStateFlow<Boolean> = MutableStateFlow(false)
@@ -74,8 +77,16 @@ class ViewModelMain @Inject constructor(
     }
 
     fun setCurrentRoute(graph: String, route: String) {
-        _graph.value = graph
-        _route.value = route
+        if (route != _route.value || graph != _route.value) {
+            // update data
+            _graph.value = graph
+            _route.value = route
+            // sand analytics
+            analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, Bundle().apply {
+                putString(FirebaseAnalytics.Param.SCREEN_CLASS, graph)
+                putString(FirebaseAnalytics.Param.SCREEN_NAME, route)
+            })
+        }
     }
 
     fun startUser() {
@@ -90,6 +101,11 @@ class ViewModelMain @Inject constructor(
         viewModelScope.launch {
             delay(100); _showMessage.value = null
         }
+    }
+
+    fun logout() {
+        firebaseAuth.signOut()
+        _isLogin.value = false
     }
 
 //    init {

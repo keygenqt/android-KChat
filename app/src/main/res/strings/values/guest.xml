@@ -1,7 +1,8 @@
 <resources>
     <!-- Welcome -->
-    <string name="welcome_btn_login">Login</string>
-    <string name="welcome_btn_sign_up">Sign Up</string>
+    <string name="welcome_title">Welcome!</string>
+    <string name="welcome_btn_login">LOGIN</string>
+    <string name="welcome_btn_sign_up">SIGN UP</string>
 
     <!-- Login -->
     <string name="login_title">Login</string>

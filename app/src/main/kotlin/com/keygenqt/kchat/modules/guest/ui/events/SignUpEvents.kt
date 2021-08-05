@@ -19,4 +19,5 @@ package com.keygenqt.kchat.modules.guest.ui.events
 sealed class SignUpEvents {
     data class SignUp(val email: String, val password: String) : SignUpEvents()
     object NavigateBack : SignUpEvents()
+    object ClearViewModel : SignUpEvents()
 }

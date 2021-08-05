@@ -13,10 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 package com.keygenqt.kchat.modules.common.navigation
 
 import androidx.navigation.NavHostController
 import com.keygenqt.kchat.base.NavActions
 
-class UserNavActions(controller: NavHostController) : NavActions(controller)
+class UserNavActions(controller: NavHostController) : NavActions(controller) {
+    val navigateToSettings: () -> Unit = {
+        controller.navigate(UserNavScreen.Settings.route)
+    }
+}
