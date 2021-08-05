@@ -13,23 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 package com.keygenqt.kchat.modules.common.ui.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class ViewModelMain @Inject constructor(
+    remoteConfig: FirebaseRemoteConfig,
     private val firebaseAuth: FirebaseAuth,
 ) : ViewModel() {
 
@@ -48,11 +49,19 @@ class ViewModelMain @Inject constructor(
     private val _route: MutableStateFlow<String> = MutableStateFlow("")
     val route: StateFlow<String> get() = _route.asStateFlow()
 
+    private val _showMessage: MutableStateFlow<String?> = MutableStateFlow(null)
+    val showMessage: StateFlow<String?> get() = _showMessage.asStateFlow()
+
     init {
-        // For simulate long work for splash
         viewModelScope.launch {
-            delay(2000)
-            _isReady.value = true
+            delay(1000) // Hold a little splash
+            remoteConfig.fetchAndActivate().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    _isReady.value = true
+                } else {
+                    showMessage("Update error remote config. Check your internet connection.")
+                }
+            }
         }
     }
 
@@ -72,6 +81,14 @@ class ViewModelMain @Inject constructor(
     fun startUser() {
         firebaseAuth.currentUser?.let {
             _isLogin.value = true
+        }
+    }
+
+    fun showMessage(text: String) {
+        _showMessage.value = text
+        // clear text messages after show
+        viewModelScope.launch {
+            delay(100); _showMessage.value = null
         }
     }
 

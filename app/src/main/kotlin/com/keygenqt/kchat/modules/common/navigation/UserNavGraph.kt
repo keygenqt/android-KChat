@@ -13,16 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 package com.keygenqt.kchat.modules.common.navigation
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import android.widget.Toast
+import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.google.accompanist.insets.ProvideWindowInsets
+import com.keygenqt.kchat.base.LocalBaseViewModel
 import com.keygenqt.kchat.extensions.addChangeRouteListener
 import com.keygenqt.kchat.modules.user.chat.ui.compose.ListChatsScreen
 import com.keygenqt.kchat.modules.user.chat.ui.events.ListChatsEvents
@@ -34,10 +36,22 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @Composable
 fun UserNavGraph(navController: NavHostController) {
 
+    val context = LocalContext.current
+
+    val localBaseViewModel = LocalBaseViewModel.current
+
     navController.addChangeRouteListener("UserNavGraph")
 
     val navActions = remember(navController) {
         UserNavActions(navController)
+    }
+
+    val showMessage: String? by localBaseViewModel.showMessage.collectAsState()
+
+    LaunchedEffect(showMessage) {
+        showMessage?.let {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+        }
     }
 
     ProvideWindowInsets {

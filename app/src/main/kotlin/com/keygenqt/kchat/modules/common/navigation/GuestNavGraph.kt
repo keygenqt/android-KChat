@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 package com.keygenqt.kchat.modules.common.navigation
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import android.widget.Toast
+import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -38,6 +39,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @Composable
 fun GuestNavGraph(navController: NavHostController) {
 
+    val context = LocalContext.current
+
     val localBaseViewModel = LocalBaseViewModel.current
 
     navController.addChangeRouteListener("GuestNavGraph")
@@ -47,6 +50,14 @@ fun GuestNavGraph(navController: NavHostController) {
     }
 
     val viewModel: GuestViewModel = hiltViewModel()
+
+    val showMessage: String? by localBaseViewModel.showMessage.collectAsState()
+
+    LaunchedEffect(showMessage) {
+        showMessage?.let {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+        }
+    }
 
     ProvideWindowInsets {
         NavHost(navController = navController, startDestination = GuestNavScreen.Welcome.route) {

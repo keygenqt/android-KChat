@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 package com.keygenqt.kchat
 
 import android.graphics.Color
@@ -32,6 +32,7 @@ import androidx.navigation.compose.rememberNavController
 import com.keygenqt.kchat.base.LocalBaseViewModel
 import com.keygenqt.kchat.modules.common.navigation.GuestNavGraph
 import com.keygenqt.kchat.modules.common.navigation.UserNavGraph
+import com.keygenqt.kchat.modules.common.navigation.UserNavScreen.ListChats
 import com.keygenqt.kchat.modules.common.ui.viewModels.ViewModelMain
 import com.keygenqt.kchat.theme.KChatTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -83,8 +84,8 @@ class MainActivity : ComponentActivity() {
 
     override fun onBackPressed() {
         when (navController.currentDestination?.route) {
-//             Show snackBar before exit
-//            NavScreenUser.ChatList.route -> if (viewModel.isShowSnackBar()) finishAffinity() else viewModel.toggleSnackBar()
+            // Show snackBar before exit
+            ListChats.route -> viewModel.apply { if (showSnackBar.value) finishAffinity() else toggleSnackBar() }
             else -> super.onBackPressed()
         }
     }
