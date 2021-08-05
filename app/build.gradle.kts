@@ -12,6 +12,8 @@ plugins {
     id("com.google.devtools.ksp")
     // https://github.com/diffplug/spotless
     id("com.diffplug.spotless")
+    // https://developers.google.com/android/guides/google-services-plugin
+    id("com.google.gms.google-services")
 }
 
 spotless {
@@ -31,7 +33,7 @@ android {
 
     defaultConfig {
 
-        applicationId = "com.keygenqt.android_kchat"
+        applicationId = "com.keygenqt.kchat"
 
         minSdk = 23
         targetSdk = 31
@@ -70,6 +72,8 @@ dependencies {
     val startupVersion: String by project
     val coreKtxVersion: String by project
     val activityComposeVersion: String by project
+    val firebaseBomVersion: String by project
+    val accompanistVersion: String by project
 
     // base
     implementation("androidx.core:core-ktx:$coreKtxVersion")
@@ -81,6 +85,11 @@ dependencies {
     implementation("io.ktor:ktor-client-serialization-jvm:$ktorVersion")
     implementation("io.ktor:ktor-client-logging-jvm:$ktorVersion")
 
+    // firebase
+    implementation(platform("com.google.firebase:firebase-bom:$firebaseBomVersion"))
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-auth-ktx")
+
     // room
     implementation("androidx.room:room-runtime:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
@@ -91,6 +100,9 @@ dependencies {
     kapt("com.google.dagger:hilt-compiler:$hiltCoreVersion")
     kapt("androidx.hilt:hilt-compiler:$hiltVersion")
     implementation("androidx.hilt:hilt-navigation-compose:$hiltComposeNavigationVersion")
+
+    // accompanist
+    implementation("com.google.accompanist:accompanist-insets:$accompanistVersion")
 
     // compose
     implementation("androidx.compose.ui:ui:$composeVersion")
