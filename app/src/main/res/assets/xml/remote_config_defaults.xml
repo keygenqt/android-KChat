@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<defaultsMap>
+    <entry>
+        <key>DarkColorPalette</key>
+        <value>{"splash":"0xFF2D2F31","primary":"0xFFBB86FC","primaryVariant":"0xFF3700B3","secondary":"0xFF03DAC6","secondaryVariant":"0xFF03DAC6","background":"0xFF121212","surface":"0xFF121212","error":"0xFFCF6679","onPrimary":"0xFF000000","onSecondary":"0xFF000000","onBackground":"0xFFFFFFFF","onSurface":"0xFFFFFFFF","onError":"0xFF000000"}</value>
+    </entry>
+    <entry>
+        <key>LightColorPalette</key>
+        <value>{"splash":"0xFF2D2F31","primary":"0xFF6200EE","primaryVariant":"0xFF3700B3","secondary":"0xFF03DAC6","secondaryVariant":"0xFF018786","background":"0xFFFFFFFF","surface":"0xFFFFFFFF","error":"0xFFB00020","onPrimary":"0xFFFFFFFF","onSecondary":"0xFF000000","onBackground":"0xFF000000","onSurface":"0xFF000000","onError":"0xFFFFFFFF"}</value>
+    </entry>
+</defaultsMap>

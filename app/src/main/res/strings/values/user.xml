@@ -1,0 +1,7 @@
+<resources>
+    <!-- ListChats -->
+    <string name="list_chats_title">Chats</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+</resources>

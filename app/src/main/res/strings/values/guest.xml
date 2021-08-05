@@ -1,0 +1,11 @@
+<resources>
+    <!-- Welcome -->
+    <string name="welcome_btn_login">Login</string>
+    <string name="welcome_btn_sign_up">Sign Up</string>
+
+    <!-- Login -->
+    <string name="login_title">Login</string>
+
+    <!-- Sign Up -->
+    <string name="sign_up_title">Sign Up</string>
+</resources>

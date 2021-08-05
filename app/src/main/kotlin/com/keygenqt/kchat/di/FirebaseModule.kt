@@ -16,10 +16,19 @@
  
 package com.keygenqt.kchat.di
 
+import android.content.Context
+import androidx.startup.AppInitializer
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.perf.ktx.performance
+import com.google.firebase.remoteconfig.ktx.remoteConfig
+import com.keygenqt.kchat.initializer.RemoteConfigInitializer
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 
 @Module
@@ -28,4 +37,18 @@ object FirebaseModule {
 
     @Provides
     fun provideFirebaseAuth() = FirebaseAuth.getInstance()
+
+    @Provides
+    fun provideFirebaseCrashlytics() = FirebaseCrashlytics.getInstance()
+
+    @Provides
+    fun provideFirebasePerformance() = Firebase.performance
+
+    @Provides
+    fun provideFirebaseRemoteConfig() = Firebase.remoteConfig
+
+    @Provides
+    fun provideFirebaseAnalytics(
+        @ApplicationContext context: Context
+    ) = FirebaseAnalytics.getInstance(context)
 }

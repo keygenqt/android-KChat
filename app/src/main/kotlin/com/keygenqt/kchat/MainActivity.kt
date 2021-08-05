@@ -23,8 +23,10 @@ import android.view.ViewTreeObserver
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.graphics.toArgb
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.keygenqt.kchat.base.LocalBaseViewModel
@@ -51,6 +53,9 @@ class MainActivity : ComponentActivity() {
             navController = rememberNavController()
             CompositionLocalProvider(LocalBaseViewModel provides viewModel) {
                 KChatTheme {
+                    // change status bar color
+                    this@MainActivity.window.statusBarColor = MaterialTheme.colors.primaryVariant.toArgb()
+                    // select graph
                     when (viewModel.isLogin.collectAsState().value) {
                         true -> UserNavGraph(navController)
                         false -> GuestNavGraph(navController)

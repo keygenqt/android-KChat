@@ -14,6 +14,8 @@ plugins {
     id("com.diffplug.spotless")
     // https://developers.google.com/android/guides/google-services-plugin
     id("com.google.gms.google-services")
+    // https://firebase.google.com/products/crashlytics
+    id("com.google.firebase.crashlytics")
 }
 
 spotless {
@@ -58,6 +60,15 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = project.property("composeVersion") as String
     }
+    // division resources
+    sourceSets {
+        getByName("main").let { data ->
+            data.res.setSrcDirs(emptySet<String>())
+            file("src/main/res").listFiles()?.toList()?.forEach { dir ->
+                data.res.srcDir(dir)
+            }
+        }
+    }
 }
 
 dependencies {
@@ -74,6 +85,7 @@ dependencies {
     val activityComposeVersion: String by project
     val firebaseBomVersion: String by project
     val accompanistVersion: String by project
+    val gsonVersion: String by project
 
     // base
     implementation("androidx.core:core-ktx:$coreKtxVersion")
@@ -89,6 +101,10 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:$firebaseBomVersion"))
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.firebase:firebase-perf-ktx")
+    implementation("com.google.firebase:firebase-config-ktx")
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-crashlytics")
 
     // room
     implementation("androidx.room:room-runtime:$roomVersion")
@@ -115,4 +131,5 @@ dependencies {
     // other
     implementation("com.jakewharton.timber:timber:$timberVersion")
     implementation("androidx.startup:startup-runtime:$startupVersion")
+    implementation("com.google.code.gson:gson:$gsonVersion")
 }
