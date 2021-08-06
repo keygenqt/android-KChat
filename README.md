@@ -1,5 +1,6 @@
 KChat (client)
 ===================
+_(in progress)_
 
 ![picture](data/preview.png)
 
