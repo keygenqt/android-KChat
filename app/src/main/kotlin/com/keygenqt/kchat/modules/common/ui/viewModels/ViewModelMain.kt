@@ -22,12 +22,16 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.keygenqt.kchat.BuildConfig
+import com.keygenqt.kchat.base.AppSharedPreferences
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -35,6 +39,7 @@ class ViewModelMain @Inject constructor(
     remoteConfig: FirebaseRemoteConfig,
     private val firebaseAuth: FirebaseAuth,
     private val analytics: FirebaseAnalytics,
+    private val preferences: AppSharedPreferences,
 ) : ViewModel() {
 
     private val _isReady: MutableStateFlow<Boolean> = MutableStateFlow(false)
@@ -57,14 +62,22 @@ class ViewModelMain @Inject constructor(
 
     init {
         viewModelScope.launch {
-            delay(1000) // Hold a little splash
-            remoteConfig.fetchAndActivate().addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    _isReady.value = true
-                } else {
-                    showMessage("Update error remote config. Check your internet connection.")
-                }
-            }
+            // Hold a little splash
+            delay(500)
+
+            // Update token user
+            preferences.token = firebaseAuth.currentUser?.let {
+                firebaseAuth.currentUser?.getIdToken(false)?.await()?.token ?: ""
+            } ?: ""
+
+            // Update Remote Config
+            remoteConfig.fetchAndActivate().await()
+
+            // Show token
+            Timber.d("User token -> ${preferences.token}")
+
+            // Start app
+            _isReady.value = true
         }
     }
 

@@ -87,6 +87,8 @@ dependencies {
     val accompanistVersion: String by project
     val gsonVersion: String by project
     val constraintLayoutComposeVersion: String by project
+    val securityCryptoVersion: String by project
+    val coroutinesPlayServicesVersion: String by project
 
     // base
     implementation("androidx.core:core-ktx:$coreKtxVersion")
@@ -135,4 +137,6 @@ dependencies {
     implementation("com.jakewharton.timber:timber:$timberVersion")
     implementation("androidx.startup:startup-runtime:$startupVersion")
     implementation("com.google.code.gson:gson:$gsonVersion")
+    implementation("androidx.security:security-crypto:$securityCryptoVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutinesPlayServicesVersion")
 }

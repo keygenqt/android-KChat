@@ -16,6 +16,7 @@
  
 package com.keygenqt.kchat.di
 
+import com.keygenqt.kchat.base.AppSharedPreferences
 import com.keygenqt.kchat.base.RestHttpClient
 import dagger.Module
 import dagger.Provides
@@ -44,7 +45,7 @@ object HttpClientModule {
 
     @Provides
     @RestHttpClient
-    fun provideHttpClient(): HttpClient {
+    fun provideHttpClient(preferences: AppSharedPreferences): HttpClient {
         return HttpClient(OkHttp) {
             // Json
             install(JsonFeature) {
@@ -67,7 +68,9 @@ object HttpClientModule {
             }
             // Apply to All Requests
             defaultRequest {
-                parameter("api_key", "some_api_key")
+                if (preferences.token.isNotBlank()) {
+                    header("Authorization", "token ${preferences.token}")
+                }
                 // Content Type
                 if (this.method != HttpMethod.Get) contentType(ContentType.Application.Json)
                 accept(ContentType.Application.Json)
