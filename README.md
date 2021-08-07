@@ -4,19 +4,18 @@ _(in progress)_
 
 ![picture](data/preview.png)
 
-Chat using websocket for data transfer, consisting of 2 parts - [backend](https://github.com/keygenqt/api-KChat) and client.
+Chat completely built on kotlin Ktor [client](https://github.com/keygenqt/android-KChat) and [server](https://github.com/keygenqt/api-KChat).
 
-### Client base info
+### Architecture
+
 * MVVM - [Guide to app architecture](https://developer.android.com/jetpack/guide)
+* HTTP client - [Ktor](https://ktor.io/)
+* DI - [Hilt](https://dagger.dev/hilt/)
 * Gradle - [Kotlin DSL](https://docs.gradle.org/current/userguide/kotlin_dsl.html)
 * Toolkit - [Jetpack Compose](https://developer.android.com/jetpack/compose)
 * Target Sdk - [Android 12](https://developer.android.com/about/versions/12)
 * Processing API - [KSP](https://github.com/google/ksp)
-* HTTP client - [Ktor](https://ktor.io/)
-
-### Back-end base info
-* Framework - [Ktor](https://ktor.io/)
-* Data Base - [MySQL](https://www.mysql.com/)
+* Authorization - [Firebase Authentication](https://firebase.google.com/docs/auth)
 
 # License
 
