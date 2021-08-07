@@ -15,7 +15,7 @@ Chat completely built on kotlin Ktor [client](https://github.com/keygenqt/androi
 * Toolkit - [Jetpack Compose](https://developer.android.com/jetpack/compose)
 * Target Sdk - [Android 12](https://developer.android.com/about/versions/12)
 * Processing API - [KSP](https://github.com/google/ksp)
-* Authorization - [Firebase Authentication](https://firebase.google.com/docs/auth)
+* Authentication - [Firebase Authentication](https://firebase.google.com/docs/auth)
 
 # License
 
