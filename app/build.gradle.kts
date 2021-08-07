@@ -37,7 +37,7 @@ android {
 
         applicationId = "com.keygenqt.kchat"
 
-        minSdk = 23
+        minSdk = 26
         targetSdk = 31
         versionCode = 1
         versionName = "1.0.0"
@@ -89,6 +89,7 @@ dependencies {
     val constraintLayoutComposeVersion: String by project
     val securityCryptoVersion: String by project
     val coroutinesPlayServicesVersion: String by project
+    val pagingComposeVersion: String by project
 
     // base
     implementation("androidx.core:core-ktx:$coreKtxVersion")
@@ -122,6 +123,7 @@ dependencies {
 
     // accompanist
     implementation("com.google.accompanist:accompanist-insets:$accompanistVersion")
+    implementation("com.google.accompanist:accompanist-pager:$accompanistVersion")
 
     // compose
     implementation("androidx.compose.ui:ui:$composeVersion")
@@ -132,6 +134,7 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling:$composeVersion")
     implementation("androidx.activity:activity-compose:$activityComposeVersion")
     implementation("androidx.compose.material:material-icons-extended:$composeVersion")
+    implementation("androidx.paging:paging-compose:$pagingComposeVersion")
 
     // other
     implementation("com.jakewharton.timber:timber:$timberVersion")

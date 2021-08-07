@@ -20,13 +20,9 @@ import androidx.compose.runtime.Immutable
 import androidx.room.PrimaryKey
 
 @Immutable
-data class UserModel(
-    @PrimaryKey val id: Long,
-    val login: String,
-    val avatarUrl: String,
-    val followersUrl: String,
-    val reposUrl: String,
+data class ChatModel(
+    @PrimaryKey val id: Int,
+    val userId: String,
     val name: String,
-    val bio: String,
-    val createdAt: String
+    val dateUpdated: Long
 )

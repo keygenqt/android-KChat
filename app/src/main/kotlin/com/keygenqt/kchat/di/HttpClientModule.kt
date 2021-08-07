@@ -69,7 +69,7 @@ object HttpClientModule {
             // Apply to All Requests
             defaultRequest {
                 if (preferences.token.isNotBlank()) {
-                    header("Authorization", "token ${preferences.token}")
+                    header("Authorization", "Basic ${preferences.token}")
                 }
                 // Content Type
                 if (this.method != HttpMethod.Get) contentType(ContentType.Application.Json)

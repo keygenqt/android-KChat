@@ -16,6 +16,8 @@
 
 package com.keygenqt.kchat.base
 
+import java.util.*
+
 class AppSharedPreferences(private val p: android.content.SharedPreferences) {
 
     companion object {
@@ -24,5 +26,5 @@ class AppSharedPreferences(private val p: android.content.SharedPreferences) {
 
     var token: String
         get() = p.getString(TOKEN, "") ?: ""
-        set(value) = p.edit().putString(TOKEN, value).apply()
+        set(value) = p.edit().putString(TOKEN, Base64.getEncoder().encodeToString("$value:".toByteArray())).apply()
 }

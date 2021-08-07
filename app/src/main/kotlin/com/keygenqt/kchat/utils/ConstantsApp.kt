@@ -14,24 +14,8 @@
  * limitations under the License.
  */
  
-package com.keygenqt.kchat.data.mappers
+package com.keygenqt.kchat.utils
 
-import com.keygenqt.kchat.data.models.UserModel
-import com.keygenqt.kchat.data.responses.UserResponses
-
-fun UserResponses.toModel(): UserModel {
-    return UserModel(
-        id = id,
-        login = login,
-        avatarUrl = avatar_url,
-        followersUrl = followers_url,
-        reposUrl = repos_url,
-        name = name,
-        bio = bio ?: "",
-        createdAt = created_at,
-    )
-}
-
-fun List<UserResponses>.toModels(): List<UserModel> {
-    return map { it.toModel() }
+object ConstantsApp {
+    const val API_URL = "http://192.168.1.68:8080/api/v1"
 }

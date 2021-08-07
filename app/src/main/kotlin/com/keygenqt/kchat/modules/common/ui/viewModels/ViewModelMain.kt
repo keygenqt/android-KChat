@@ -16,22 +16,24 @@
 
 package com.keygenqt.kchat.modules.common.ui.viewModels
 
+import android.os.Build
 import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import com.keygenqt.kchat.BuildConfig
-import com.keygenqt.kchat.base.AppSharedPreferences
+import com.keygenqt.kchat.base.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
+import io.ktor.client.*
+import io.ktor.client.request.*
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import timber.log.Timber
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -121,13 +123,7 @@ class ViewModelMain @Inject constructor(
         _isLogin.value = false
     }
 
-//    init {
-//        viewModelScope.launch {
-//            delay(2000) // slow internet
-//            val item: UserResponses = httpClient.get("https://api.github.com/users/keygenqt")
-//            _user.value = item.toModel()
-//        }
-//    }
+
 //
 //    var default: DefaultClientWebSocketSession? = null
 //

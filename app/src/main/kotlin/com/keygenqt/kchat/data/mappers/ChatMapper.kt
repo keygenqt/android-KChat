@@ -13,22 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
-package com.keygenqt.kchat.data.responses
 
-import androidx.compose.runtime.Immutable
-import androidx.room.PrimaryKey
-import kotlinx.serialization.Serializable
+package com.keygenqt.kchat.data.mappers
 
-@Immutable
-@Serializable
-data class UserResponses(
-    @PrimaryKey val id: Long,
-    val login: String,
-    val avatar_url: String,
-    val followers_url: String,
-    val repos_url: String,
-    val name: String,
-    val bio: String?,
-    val created_at: String
-)
+import com.keygenqt.kchat.data.models.ChatModel
+import com.keygenqt.kchat.data.responses.ChatResponses
+
+fun ChatResponses.toModel(): ChatModel {
+    return ChatModel(
+        id = id,
+        userId = userId,
+        name = name,
+        dateUpdated = dateUpdated,
+    )
+}
+
+fun List<ChatResponses>.toModels(): List<ChatModel> {
+    return map { it.toModel() }
+}

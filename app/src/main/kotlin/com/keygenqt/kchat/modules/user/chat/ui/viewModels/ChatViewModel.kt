@@ -13,14 +13,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 package com.keygenqt.kchat.modules.user.chat.ui.viewModels
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.keygenqt.kchat.base.error
+import com.keygenqt.kchat.base.success
+import com.keygenqt.kchat.data.models.ChatModel
+import com.keygenqt.kchat.modules.user.chat.services.ApiServiceChat
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 @ExperimentalCoroutinesApi
-class ChatViewModel @Inject constructor() : ViewModel()
+class ChatViewModel @Inject constructor(
+    apiService: ApiServiceChat
+) : ViewModel() {
+
+    private val _listChats: MutableStateFlow<List<ChatModel>> = MutableStateFlow(listOf())
+    val listChats: StateFlow<List<ChatModel>> get() = _listChats.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            apiService.getListChats()
+                .success {
+                    _listChats.value = it
+                }
+                .error {
+                    Timber.e(it)
+                }
+        }
+    }
+}
