@@ -18,6 +18,7 @@ package com.keygenqt.kchat.modules.common.navigation
 
 import android.widget.Toast
 import androidx.compose.runtime.*
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -29,10 +30,12 @@ import com.keygenqt.kchat.base.LocalBaseViewModel
 import com.keygenqt.kchat.extensions.addChangeRouteListener
 import com.keygenqt.kchat.modules.user.chat.ui.compose.ListChatsScreen
 import com.keygenqt.kchat.modules.user.chat.ui.events.ListChatsEvents
+import com.keygenqt.kchat.modules.user.chat.ui.viewModels.ChatViewModel
 import com.keygenqt.kchat.modules.user.settings.ui.compose.SettingsScreen
 import com.keygenqt.kchat.modules.user.settings.ui.events.SettingsEvents
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalComposeUiApi
 @ExperimentalPagingApi
 @ExperimentalCoroutinesApi
 @Composable
@@ -59,9 +62,16 @@ fun UserNavGraph(navController: NavHostController) {
     ProvideWindowInsets {
         NavHost(navController = navController, startDestination = UserNavScreen.ListChats.route) {
             composable(UserNavScreen.ListChats.route) {
-                ListChatsScreen(viewModel = hiltViewModel()) { event ->
+
+                val viewModel: ChatViewModel = hiltViewModel()
+
+                ListChatsScreen(viewModel = viewModel) { event ->
                     when (event) {
+                        is ListChatsEvents.ToChatView -> {
+                            /* @todo */
+                        }
                         is ListChatsEvents.ToSettings -> navActions.navigateToSettings()
+                        is ListChatsEvents.CreateChat -> viewModel.createChat(name = event.name)
                         is ListChatsEvents.Logout -> localBaseViewModel.logout()
                     }
                 }

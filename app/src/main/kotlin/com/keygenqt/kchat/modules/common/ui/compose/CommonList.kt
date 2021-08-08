@@ -25,6 +25,7 @@ import timber.log.Timber
 fun <T : Any> CommonList(
     modifier: Modifier = Modifier,
     padding: Dp = 16.dp,
+    paddingBottom: Dp = 0.dp,
     items: LazyPagingItems<T>,
     state: SwipeRefreshState,
     content: @Composable (Int, T) -> Unit,
@@ -47,7 +48,7 @@ fun <T : Any> CommonList(
     ) {
         if (items.itemCount != 0) {
             LazyColumn(
-                contentPadding = PaddingValues(start = padding, top = padding, end = padding),
+                contentPadding = PaddingValues(start = padding, top = padding, end = padding, bottom = paddingBottom),
                 modifier = Modifier
                     .fillMaxSize()
                     .visible(items.loadState.refresh !is LoadState.Loading)
@@ -63,15 +64,19 @@ fun <T : Any> CommonList(
                             item { LoadingItem() }
                         }
                         loadState.refresh is LoadState.Error -> {
-                            val error = items.loadState.refresh as LoadState.Error
-                            item {
-                                Timber.e("Refresh error: $error.error.localizedMessage")
+                            val error = items.loadState.refresh as? LoadState.Error
+                            error?.let {
+                                item {
+                                    Timber.e("Refresh error: $error.error.localizedMessage")
+                                }
                             }
                         }
                         loadState.append is LoadState.Error -> {
-                            val error = items.loadState.refresh as LoadState.Error
-                            item {
-                                Timber.e("Append error: $error.error.localizedMessage")
+                            val error = items.loadState.refresh as? LoadState.Error
+                            error?.let {
+                                item {
+                                    Timber.e("Append error: $error.error.localizedMessage")
+                                }
                             }
                         }
                     }

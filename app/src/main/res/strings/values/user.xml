@@ -1,6 +1,8 @@
 <resources>
     <!-- ListChats -->
     <string name="list_chats_title">Chats</string>
+    <string name="list_chats_create_chat_title">Create Chat</string>
+    <string name="list_chats_create_chat_successfully">Create chat successfully</string>
 
     <!-- Settings -->
     <string name="settings_title">Settings</string>

@@ -14,11 +14,14 @@
  * limitations under the License.
  */
 
-package com.keygenqt.kchat.modules.user.chat.ui.events
+package com.keygenqt.kchat.data.requests
 
-sealed class ListChatsEvents {
-    class ToChatView(val id: Int) : ListChatsEvents()
-    class CreateChat(val name: String) : ListChatsEvents()
-    object ToSettings : ListChatsEvents()
-    object Logout : ListChatsEvents()
-}
+import androidx.compose.runtime.Immutable
+import kotlinx.serialization.Serializable
+
+@Immutable
+@Serializable
+data class ChatCreateRequest(
+    val userId: String,
+    val name: String,
+)

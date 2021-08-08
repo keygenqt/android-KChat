@@ -17,7 +17,7 @@ import timber.log.Timber
 @ExperimentalPagingApi
 class RemoteMediatorChats(
     private val data: DataServiceChat,
-    private val repository: ApiServiceChat,
+    private val apiService: ApiServiceChat,
 ) : RemoteMediator<Int, ChatModel>() {
 
     override suspend fun initialize(): InitializeAction {
@@ -44,7 +44,7 @@ class RemoteMediatorChats(
                 }
             }
 
-            val response = repository.getListChats(
+            val response = apiService.getListChats(
                 offset = offset ?: 0
             )
 
@@ -56,7 +56,9 @@ class RemoteMediatorChats(
                     }
                     insertChats(models)
                 }
-            }.error { Timber.e(it) }
+            }.error {
+                Timber.e(it)
+            }
 
             MediatorResult.Success(
                 endOfPaginationReached = response.isError || response.isEmpty

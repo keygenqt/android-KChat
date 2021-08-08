@@ -2,6 +2,10 @@
     <!-- Main -->
     <string name="app_name">KChat</string>
 
+    <!-- Main Optional Menu -->
+    <string name="main_optional_menu_item1">Settings</string>
+    <string name="main_optional_menu_item2">Logout</string>
+
     <!-- Errors -->
     <string name="error_field_min_length">Minimum length %s characters</string>
     <string name="error_field_max_length">Maximum length %s characters</string>
@@ -11,6 +15,7 @@
 
     <!-- Form-->
     <string name="form_edit_text">Edit Text</string>
+    <string name="form_name">Name</string>
     <string name="form_email">Email</string>
     <string name="form_password">Password</string>
     <string name="form_button_submit">Submit</string>
@@ -19,9 +24,8 @@
     <string name="common_not_available">Not Available</string>
     <string name="common_coming_soon">Coming soon…</string>
     <string name="common_navigate_up">Navigate up</string>
-
-    <!-- Main Optional Menu -->
-    <string name="main_optional_menu_item1">Settings</string>
-    <string name="main_optional_menu_item2">Logout</string>
+    <string name="common_btn_confirm">Confirm</string>
+    <string name="common_btn_cancel">Cancel</string>
+    <string name="common_exit">Please click back again to exit</string>
 
 </resources>

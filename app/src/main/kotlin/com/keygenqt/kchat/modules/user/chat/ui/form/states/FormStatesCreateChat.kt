@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.keygenqt.kchat.modules.user.chat.ui.events
+package com.keygenqt.kchat.modules.user.chat.ui.form.states
 
-sealed class ListChatsEvents {
-    class ToChatView(val id: Int) : ListChatsEvents()
-    class CreateChat(val name: String) : ListChatsEvents()
-    object ToSettings : ListChatsEvents()
-    object Logout : ListChatsEvents()
+import com.keygenqt.kchat.modules.common.ui.form.base.FormFieldState
+import com.keygenqt.kchat.modules.common.ui.form.base.FormStates
+
+enum class FormStatesCreateChat(val state: FormFieldState) : FormStates {
+    ChatName(StateChatName()),
 }
