@@ -90,9 +90,6 @@ fun GuestNavGraph(navController: NavHostController) {
                         is LoginEvents.Login -> viewModel.login(event.email, event.password) {
                             localBaseViewModel.startUser()
                         }
-                        is LoginEvents.LoginGoogle -> viewModel.loginGoogle(event.idToken) {
-                            localBaseViewModel.startUser()
-                        }
                         is LoginEvents.NavigateBack -> navActions.upPress.invoke()
                         is LoginEvents.ClearViewModel -> viewModel.clear()
                     }

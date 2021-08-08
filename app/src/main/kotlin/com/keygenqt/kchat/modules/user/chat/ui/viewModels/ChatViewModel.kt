@@ -17,38 +17,32 @@
 package com.keygenqt.kchat.modules.user.chat.ui.viewModels
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.keygenqt.kchat.base.error
-import com.keygenqt.kchat.base.success
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.keygenqt.kchat.data.models.ChatModel
+import com.keygenqt.kchat.modules.user.chat.paging.RemoteMediatorChats
 import com.keygenqt.kchat.modules.user.chat.services.ApiServiceChat
+import com.keygenqt.kchat.modules.user.chat.services.DataServiceChat
+import com.keygenqt.kchat.utils.ConstantsPaging
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
-import timber.log.Timber
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
 @ExperimentalCoroutinesApi
 class ChatViewModel @Inject constructor(
-    apiService: ApiServiceChat
+    repository: ApiServiceChat,
+    private val data: DataServiceChat,
 ) : ViewModel() {
 
-    private val _listChats: MutableStateFlow<List<ChatModel>> = MutableStateFlow(listOf())
-    val listChats: StateFlow<List<ChatModel>> get() = _listChats.asStateFlow()
-
-    init {
-        viewModelScope.launch {
-            apiService.getListChats()
-                .success {
-                    _listChats.value = it
-                }
-                .error {
-                    Timber.e(it)
-                }
-        }
-    }
+    @ExperimentalPagingApi
+    val listChats: Flow<PagingData<ChatModel>> = Pager(
+        config = PagingConfig(pageSize = ConstantsPaging.PAGE_LIMIT),
+        remoteMediator = RemoteMediatorChats(data, repository)
+    ) {
+        data.pagingListChats()
+    }.flow
 }

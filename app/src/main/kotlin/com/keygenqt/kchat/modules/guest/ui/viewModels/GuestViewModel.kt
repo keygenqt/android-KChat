@@ -17,20 +17,24 @@
 package com.keygenqt.kchat.modules.guest.ui.viewModels
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
+import com.keygenqt.kchat.base.AppSharedPreferences
 import com.keygenqt.kchat.extensions.logging
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 @HiltViewModel
 @ExperimentalCoroutinesApi
 class GuestViewModel @Inject constructor(
-    private val firebaseAuth: FirebaseAuth
+    private val firebaseAuth: FirebaseAuth,
+    private val preferences: AppSharedPreferences,
 ) : ViewModel() {
 
     private val _commonError: MutableStateFlow<String?> = MutableStateFlow(null)
@@ -41,14 +45,19 @@ class GuestViewModel @Inject constructor(
 
     fun signUp(email: String, password: String, success: () -> Unit) {
         clear()
-        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
-            if (it.isSuccessful) {
-                // change navGraph
+        _loading.value = true
+        viewModelScope.launch {
+            try {
+                // auth
+                firebaseAuth.createUserWithEmailAndPassword(email, password).await()
+                // update token user
+                preferences.token = firebaseAuth.currentUser?.let {
+                    firebaseAuth.currentUser?.getIdToken(true)?.await()?.token ?: ""
+                } ?: ""
+                // done
                 success.invoke()
-                // disable animation loading
-                _loading.value = false
-            } else {
-                _commonError.value = it.exception.logging("Registration failed")
+            } catch (ex: Exception) {
+                _commonError.value = ex.logging("Sign Up failed")
                 _loading.value = false
             }
         }
@@ -57,31 +66,18 @@ class GuestViewModel @Inject constructor(
     fun login(email: String, password: String, success: () -> Unit) {
         clear()
         _loading.value = true
-        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
-            if (it.isSuccessful) {
-                // change navGraph
+        viewModelScope.launch {
+            try {
+                // auth
+                firebaseAuth.signInWithEmailAndPassword(email, password).await()
+                // update token user
+                preferences.token = firebaseAuth.currentUser?.let {
+                    firebaseAuth.currentUser?.getIdToken(true)?.await()?.token ?: ""
+                } ?: ""
+                // done
                 success.invoke()
-                // disable animation loading
-                _loading.value = false
-            } else {
-                _commonError.value = it.exception.logging("Authentication failed")
-                _loading.value = false
-            }
-        }
-    }
-
-    fun loginGoogle(idToken: String?, success: () -> Unit) {
-        clear()
-        _loading.value = true
-        val credential = GoogleAuthProvider.getCredential(idToken, null)
-        firebaseAuth.signInWithCredential(credential).addOnCompleteListener {
-            if (it.isSuccessful) {
-                // change navGraph
-                success.invoke()
-                // disable animation loading
-                _loading.value = false
-            } else {
-                _commonError.value = it.exception.logging("Authentication failed")
+            } catch (ex: Exception) {
+                _commonError.value = ex.logging("Authentication failed")
                 _loading.value = false
             }
         }

@@ -20,11 +20,20 @@ import java.util.*
 
 class AppSharedPreferences(private val p: android.content.SharedPreferences) {
 
-    companion object {
-        private const val TOKEN = "TOKEN"
+    enum class KEYS {
+        // common
+        TOKEN,
+
+        // last update list
+        LAST_UPDATE_LIST_CHAT,
     }
 
     var token: String
-        get() = p.getString(TOKEN, "") ?: ""
-        set(value) = p.edit().putString(TOKEN, Base64.getEncoder().encodeToString("$value:".toByteArray())).apply()
+        get() = p.getString(KEYS.TOKEN.name, "") ?: ""
+        set(value) = p.edit().putString(KEYS.TOKEN.name, Base64.getEncoder().encodeToString("$value:".toByteArray()))
+            .apply()
+
+    var lastUpdateListChats: Long
+        get() = p.getLong(KEYS.LAST_UPDATE_LIST_CHAT.name, 0L)
+        set(value) = p.edit().putLong(KEYS.LAST_UPDATE_LIST_CHAT.name, value).apply()
 }

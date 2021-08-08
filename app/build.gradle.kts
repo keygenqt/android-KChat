@@ -8,8 +8,6 @@ plugins {
     id("dagger.hilt.android.plugin")
     // https://github.com/Kotlin/kotlinx.serialization
     kotlin("plugin.serialization")
-    // https://github.com/google/ksp
-    id("com.google.devtools.ksp")
     // https://github.com/diffplug/spotless
     id("com.diffplug.spotless")
     // https://developers.google.com/android/guides/google-services-plugin
@@ -113,7 +111,7 @@ dependencies {
     // room
     implementation("androidx.room:room-runtime:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
-    ksp("androidx.room:room-compiler:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
 
     // hilt
     implementation("com.google.dagger:hilt-android:$hiltCoreVersion")
@@ -124,6 +122,7 @@ dependencies {
     // accompanist
     implementation("com.google.accompanist:accompanist-insets:$accompanistVersion")
     implementation("com.google.accompanist:accompanist-pager:$accompanistVersion")
+    implementation("com.google.accompanist:accompanist-swiperefresh:$accompanistVersion")
 
     // compose
     implementation("androidx.compose.ui:ui:$composeVersion")

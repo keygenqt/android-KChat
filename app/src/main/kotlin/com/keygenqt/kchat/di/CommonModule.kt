@@ -16,15 +16,17 @@
 
 package com.keygenqt.kchat.di
 
+import android.app.Application
 import android.content.Context
+import androidx.room.Room
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import com.keygenqt.kchat.base.AppSharedPreferences
+import com.keygenqt.kchat.data.AppDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.hilt.components.SingletonComponent
 
 @Module
@@ -42,5 +44,12 @@ object CommonModule {
                 EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
             )
         )
+    }
+
+    @Provides
+    fun provideAppDatabase(application: Application): AppDatabase {
+        return Room.databaseBuilder(application, AppDatabase::class.java, "kchat.db")
+            .fallbackToDestructiveMigration()
+            .build()
     }
 }

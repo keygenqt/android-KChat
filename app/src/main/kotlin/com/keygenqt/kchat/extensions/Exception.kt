@@ -5,16 +5,8 @@ import timber.log.Timber
 
 fun Exception?.logging(defaultMessage: String): String {
     return this?.let { ex ->
-        FirebaseCrashlytics.getInstance().recordException(ex.toThrowable())
+        FirebaseCrashlytics.getInstance().recordException(ex)
         Timber.e(ex)
         ex.message
     } ?: defaultMessage
-}
-
-fun Exception.toThrowable(): Throwable {
-    try {
-        throw this
-    } catch (ex: Exception) {
-        return ex
-    }
 }

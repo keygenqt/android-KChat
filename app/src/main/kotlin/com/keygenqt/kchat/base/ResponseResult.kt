@@ -1,7 +1,6 @@
 package com.keygenqt.kchat.base
 
 import androidx.paging.PagingSource
-import java.lang.RuntimeException
 
 sealed class ResponseResult<out R> {
     data class Success<out T>(val data: T) : ResponseResult<T>()
@@ -31,6 +30,9 @@ val ResponseResult<*>?.size
     } else {
         0
     }
+
+val ResponseResult<*>?.isEmpty
+    get() = this.size == 0
 
 val ResponseResult<*>?.isSucceeded get() = this != null && this is ResponseResult.Success && data != null
 

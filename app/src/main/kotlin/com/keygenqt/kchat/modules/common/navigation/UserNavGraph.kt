@@ -23,6 +23,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.paging.ExperimentalPagingApi
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.keygenqt.kchat.base.LocalBaseViewModel
 import com.keygenqt.kchat.extensions.addChangeRouteListener
@@ -32,6 +33,7 @@ import com.keygenqt.kchat.modules.user.settings.ui.compose.SettingsScreen
 import com.keygenqt.kchat.modules.user.settings.ui.events.SettingsEvents
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalPagingApi
 @ExperimentalCoroutinesApi
 @Composable
 fun UserNavGraph(navController: NavHostController) {

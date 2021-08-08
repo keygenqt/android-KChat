@@ -30,6 +30,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.graphics.toArgb
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import androidx.paging.ExperimentalPagingApi
 import com.keygenqt.kchat.base.LocalBaseViewModel
 import com.keygenqt.kchat.modules.common.navigation.GuestNavGraph
 import com.keygenqt.kchat.modules.common.navigation.UserNavGraph
@@ -46,6 +47,7 @@ class MainActivity : ComponentActivity() {
 
     private lateinit var navController: NavHostController
 
+    @ExperimentalPagingApi
     @ExperimentalComposeUiApi
     @ExperimentalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {

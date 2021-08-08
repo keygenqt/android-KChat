@@ -17,8 +17,10 @@
 package com.keygenqt.kchat.data.models
 
 import androidx.compose.runtime.Immutable
+import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+@Entity
 @Immutable
 data class ChatModel(
     @PrimaryKey val id: Int,
