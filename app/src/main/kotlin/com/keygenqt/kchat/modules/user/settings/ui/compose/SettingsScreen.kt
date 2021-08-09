@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,6 +36,7 @@ import com.keygenqt.kchat.modules.user.settings.ui.viewModels.SettingsViewModel
 import com.keygenqt.kchat.theme.KChatTheme
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalComposeUiApi
 @ExperimentalCoroutinesApi
 @Composable
 fun SettingsScreen(
@@ -46,6 +48,7 @@ fun SettingsScreen(
     )
 }
 
+@ExperimentalComposeUiApi
 @Composable
 fun SettingsBody(
     onNavigationEvent: (SettingsEvents) -> Unit = {},
@@ -69,6 +72,7 @@ fun SettingsBody(
     }
 }
 
+@ExperimentalComposeUiApi
 @Preview("Light")
 @Preview("Dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable

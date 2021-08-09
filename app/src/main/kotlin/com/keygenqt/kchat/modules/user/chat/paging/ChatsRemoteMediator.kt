@@ -15,7 +15,7 @@ import com.keygenqt.kchat.utils.ConstantsPaging.CACHE_TIMEOUT
 import timber.log.Timber
 
 @ExperimentalPagingApi
-class RemoteMediatorChats(
+class ChatsRemoteMediator(
     private val data: DataServiceChat,
     private val apiService: ApiServiceChat,
 ) : RemoteMediator<Int, ChatModel>() {

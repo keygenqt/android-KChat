@@ -19,6 +19,7 @@ package com.keygenqt.kchat.modules.user.chat.ui.events
 sealed class ListChatsEvents {
     class ToChatView(val id: Int) : ListChatsEvents()
     class CreateChat(val name: String) : ListChatsEvents()
+    class Search(val text: String?) : ListChatsEvents()
     object ToSettings : ListChatsEvents()
     object Logout : ListChatsEvents()
 }

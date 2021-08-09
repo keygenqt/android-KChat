@@ -67,6 +67,7 @@ fun UserNavGraph(navController: NavHostController) {
 
                 ListChatsScreen(viewModel = viewModel) { event ->
                     when (event) {
+                        is ListChatsEvents.Search -> viewModel.search(event.text)
                         is ListChatsEvents.ToChatView -> {
                             /* @todo */
                         }

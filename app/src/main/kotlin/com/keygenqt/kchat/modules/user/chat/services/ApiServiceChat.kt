@@ -21,11 +21,12 @@ import javax.inject.Inject
 class ApiServiceChat @Inject constructor(
     private val httpClient: HttpClient
 ) {
-    suspend fun getListChats(offset: Int): ResponseResult<List<ChatModel>> {
+    suspend fun getListChats(offset: Int, search: String? = null): ResponseResult<List<ChatModel>> {
         return withContext(Dispatchers.IO) {
             if (BuildConfig.DEBUG) delay(1000L) // Simulate slow internet
             executeWithResponse {
                 httpClient.get<List<ChatResponses>>("${ConstantsApp.API_URL}/chats") {
+                    search?.let { parameter("search", search) }
                     parameter("offset", offset)
                     parameter("limit", PAGE_LIMIT)
                 }.toModels()

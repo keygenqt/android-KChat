@@ -21,6 +21,7 @@
     <string name="form_button_submit">Submit</string>
 
     <!-- Common-->
+    <string name="common_search">Search…</string>
     <string name="common_not_available">Not Available</string>
     <string name="common_coming_soon">Coming soon…</string>
     <string name="common_navigate_up">Navigate up</string>

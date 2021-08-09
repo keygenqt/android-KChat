@@ -57,13 +57,17 @@ fun ListChatsScreen(
     viewModel: ChatViewModel,
     onNavigationEvent: (ListChatsEvents) -> Unit = {},
 ) {
+    val search: String? by viewModel.search.collectAsState()
     val isShowSnackBar: Boolean by LocalBaseViewModel.current.showSnackBar.collectAsState()
     val items: LazyPagingItems<ChatModel> = viewModel.listChats.collectAsLazyPagingItems()
+    val searchItems: LazyPagingItems<ChatModel> = viewModel.searchListChats.collectAsLazyPagingItems()
     val createChatSuccess: Boolean? by viewModel.createChatSuccess.collectAsState()
 
     Box {
         ListChatsBody(
             items = items,
+            search = search,
+            searchItems = searchItems,
             createChatSuccess = createChatSuccess,
             onNavigationEvent = onNavigationEvent,
         )
@@ -82,8 +86,10 @@ fun ListChatsScreen(
 @ExperimentalComposeUiApi
 @Composable
 fun ListChatsBody(
+    search: String?,
     createChatSuccess: Boolean?,
     items: LazyPagingItems<ChatModel>,
+    searchItems: LazyPagingItems<ChatModel>,
     onNavigationEvent: (ListChatsEvents) -> Unit = {},
 ) {
     val context = LocalContext.current
@@ -94,6 +100,7 @@ fun ListChatsBody(
         if (createChatSuccess == true) {
             showDialogCreate.value = false
             items.refresh()
+            searchItems.refresh()
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
         }
     }
@@ -117,21 +124,42 @@ fun ListChatsBody(
                         onNavigationEvent(ListChatsEvents.Logout)
                     }
                 )
+            },
+            searchListener = { value ->
+                onNavigationEvent(ListChatsEvents.Search(value))
+                searchItems.refresh()
             }
         ) {
-            CommonList(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(MaterialTheme.colors.background),
-                items = items,
-                paddingBottom = 24.dp,
-                state = rememberSwipeRefreshState(items.loadState.refresh is LoadState.Loading)
-            ) { index, item ->
-                ListChatsScreenItem(
-                    index = index,
-                    item = item,
-                    onNavigationEvent = onNavigationEvent
-                )
+            search?.let {
+                CommonList(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(MaterialTheme.colors.background),
+                    items = searchItems,
+                    paddingBottom = 24.dp,
+                    state = rememberSwipeRefreshState(searchItems.loadState.refresh is LoadState.Loading)
+                ) { index, item ->
+                    ListChatsScreenItem(
+                        index = index,
+                        item = item,
+                        onNavigationEvent = onNavigationEvent
+                    )
+                }
+            } ?: run {
+                CommonList(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(MaterialTheme.colors.background),
+                    items = items,
+                    paddingBottom = 24.dp,
+                    state = rememberSwipeRefreshState(items.loadState.refresh is LoadState.Loading)
+                ) { index, item ->
+                    ListChatsScreenItem(
+                        index = index,
+                        item = item,
+                        onNavigationEvent = onNavigationEvent
+                    )
+                }
             }
         }
 
