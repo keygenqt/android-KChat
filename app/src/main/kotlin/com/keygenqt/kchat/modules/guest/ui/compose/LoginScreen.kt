@@ -80,7 +80,7 @@ fun LoginBody(
 
     MainScaffold(
         isLoaderShow = loading,
-        label = stringResource(id = R.string.login_title),
+        title = stringResource(id = R.string.login_title),
         navigationIconOnClick = { onNavigationEvent(LoginEvents.NavigateBack) }
     ) { innerPadding ->
 

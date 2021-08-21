@@ -6,6 +6,7 @@ import com.keygenqt.kchat.base.BaseDataService
 import com.keygenqt.kchat.data.AppDatabase
 import com.keygenqt.kchat.data.models.ChatModel
 import kotlinx.coroutines.flow.Flow
+import timber.log.Timber
 
 class DataServiceChat(
     override val db: AppDatabase,
@@ -19,7 +20,7 @@ class DataServiceChat(
     }
 
     suspend fun insertChats(models: List<ChatModel>) {
-        daoChatModel.insertModels(models)
+        daoChatModel.insertModels(*models.reversed().toTypedArray())
     }
 
     suspend fun clearChats() {
@@ -32,6 +33,6 @@ class DataServiceChat(
 
     suspend fun updateChats(models: List<ChatModel>) {
         daoChatModel.clear()
-        daoChatModel.insertModels(models)
+        daoChatModel.insertModels(*models.toTypedArray())
     }
 }

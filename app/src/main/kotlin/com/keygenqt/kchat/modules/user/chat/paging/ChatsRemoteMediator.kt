@@ -12,6 +12,7 @@ import com.keygenqt.kchat.data.models.ChatModel
 import com.keygenqt.kchat.modules.user.chat.services.ApiServiceChat
 import com.keygenqt.kchat.modules.user.chat.services.DataServiceChat
 import com.keygenqt.kchat.utils.ConstantsPaging.CACHE_TIMEOUT
+import com.keygenqt.kchat.utils.ConstantsPaging.PAGE_LIMIT
 import timber.log.Timber
 
 @ExperimentalPagingApi
@@ -19,6 +20,10 @@ class ChatsRemoteMediator(
     private val data: DataServiceChat,
     private val apiService: ApiServiceChat,
 ) : RemoteMediator<Int, ChatModel>() {
+
+    companion object {
+        var key: Int? = null
+    }
 
     override suspend fun initialize(): InitializeAction {
         return if (System.currentTimeMillis() - data.preferences.lastUpdateListChats >= CACHE_TIMEOUT) {
@@ -35,17 +40,19 @@ class ChatsRemoteMediator(
         return try {
 
             val offset = when (loadType) {
-                LoadType.REFRESH -> null
+                LoadType.REFRESH -> {
+                    key = null
+                    key
+                }
                 LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
                 LoadType.APPEND -> {
-                    val lastItem =
-                        state.lastItemOrNull() ?: return MediatorResult.Success(endOfPaginationReached = true)
-                    lastItem.id
+                    key = (key ?: 0).plus(1)
+                    key
                 }
             }
 
             val response = apiService.getListChats(
-                offset = offset ?: 0
+                offset = (offset ?: 0) * PAGE_LIMIT
             )
 
             response.success { models ->

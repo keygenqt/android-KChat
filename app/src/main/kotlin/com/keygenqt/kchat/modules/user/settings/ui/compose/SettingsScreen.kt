@@ -54,7 +54,7 @@ fun SettingsBody(
     onNavigationEvent: (SettingsEvents) -> Unit = {},
 ) {
     MainScaffold(
-        label = stringResource(id = R.string.settings_title),
+        title = stringResource(id = R.string.settings_title),
         navigationIconOnClick = { onNavigationEvent(SettingsEvents.NavigateBack) },
     ) { innerPadding ->
 

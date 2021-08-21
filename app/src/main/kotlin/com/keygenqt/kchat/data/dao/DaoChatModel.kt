@@ -10,14 +10,14 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface DaoChatModel {
-    @Query("SELECT * FROM ChatModel")
+    @Query("SELECT * FROM ChatModel ORDER BY id DESC")
     fun pagingSource(): PagingSource<Int, ChatModel>
 
     @Query("SELECT * FROM ChatModel WHERE id = :id")
     fun getModel(id: Int): Flow<ChatModel>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertModels(models: List<ChatModel>)
+    suspend fun insertModels(vararg items: ChatModel)
 
     @Query("DELETE FROM ChatModel")
     suspend fun clear()

@@ -108,7 +108,7 @@ fun ListChatsBody(
     Box {
         MainScaffold(
             icon = null,
-            label = stringResource(id = R.string.list_chats_title),
+            title = stringResource(id = R.string.list_chats_title),
             contentFloatingActionButton = {
                 Icon(Icons.Filled.Add, "Add")
             },

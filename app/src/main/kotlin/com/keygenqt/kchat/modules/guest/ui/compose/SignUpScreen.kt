@@ -79,7 +79,7 @@ fun SignUpBody(
 
     MainScaffold(
         isLoaderShow = loading,
-        label = stringResource(id = R.string.sign_up_title),
+        title = stringResource(id = R.string.sign_up_title),
         navigationIconOnClick = { onNavigationEvent(SignUpEvents.NavigateBack) }
     ) { innerPadding ->
 

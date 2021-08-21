@@ -14,6 +14,8 @@ plugins {
     id("com.google.gms.google-services")
     // https://firebase.google.com/products/crashlytics
     id("com.google.firebase.crashlytics")
+    // https://github.com/ben-manes/gradle-versions-plugin
+    id("com.github.ben-manes.versions") version "0.39.0"
 }
 
 spotless {

@@ -16,6 +16,12 @@ Chat completely built on kotlin Ktor [client](https://github.com/keygenqt/androi
 * Target Sdk - [Android 12](https://developer.android.com/about/versions/12)
 * Authentication - [Firebase Authentication](https://firebase.google.com/docs/auth)
 
+### Preview
+<p>
+<img src="data/vokoscreen-2021-08-21_14-30-55.gif" width="37%"/>
+<img src="data/vokoscreen-2021-08-21_14-29-49.gif" width="37%"/>
+</p>
+
 # License
 
 ```

@@ -1,3 +1,19 @@
+/*
+ * Copyright 2021 Vitaliy Zarubin
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.keygenqt.kchat.modules.common.ui.compose
 
 import android.content.res.Configuration
@@ -17,7 +33,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalFocusManager
@@ -26,6 +41,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
@@ -37,14 +53,14 @@ import com.keygenqt.kchat.theme.KChatTheme
 @ExperimentalComposeUiApi
 @Composable
 fun MainScaffold(
-    label: String = "Label",
+    title: String? = null,
     isLoaderShow: Boolean = false,
     icon: ImageVector? = Icons.Filled.ArrowBack,
     navigationIconOnClick: () -> Unit = {},
     elevation: Dp = AppBarDefaults.TopAppBarElevation,
     contentDescription: String = stringResource(R.string.common_navigate_up),
     floatingActionButtonOnClick: () -> Unit = {},
-    searchListener: (String?) -> Unit = {},
+    searchListener: ((String?) -> Unit)? = null,
     contentFloatingActionButton: @Composable (() -> Unit)? = null,
     actions: @Composable ((RowScope) -> Unit)? = null,
     content: @Composable (PaddingValues) -> Unit,
@@ -57,100 +73,125 @@ fun MainScaffold(
     val focusManager = LocalFocusManager.current
 
     Scaffold(
-        topBar = {
-            TopAppBar(
-                backgroundColor = MaterialTheme.colors.primary,
-                elevation = elevation,
-                title = {
-                    Box {
-                        if (isShowSearch) {
-                            if (state.getValue().isEmpty()) {
-                                Text(
-                                    fontSize = TextUnit.Unspecified,
-                                    text = stringResource(id = R.string.common_search),
-                                    color = Color.White
+        topBar = title?.let {
+            {
+                TopAppBar(
+                    backgroundColor = MaterialTheme.colors.primary,
+                    elevation = elevation,
+                    title = {
+                        Box {
+                            searchListener?.let {
+                                if (isShowSearch) {
+                                    if (state.getValue().isEmpty()) {
+                                        Text(
+                                            fontSize = TextUnit.Unspecified,
+                                            text = stringResource(id = R.string.common_search),
+                                            color = MaterialTheme.colors.onPrimary
+                                        )
+                                    }
+                                    BasicTextField(
+                                        singleLine = true,
+                                        value = state.text,
+                                        onValueChange = { state.text = it },
+                                        modifier = Modifier
+                                            .focusRequester(requester)
+                                            .fillMaxWidth()
+                                            .onFocusChanged { focusState ->
+                                                if (focusState.isFocused) {
+                                                    state.positionToEnd()
+                                                }
+                                            },
+                                        textStyle = MaterialTheme.typography.h6.merge(TextStyle(color = MaterialTheme.colors.onPrimary)),
+                                        keyboardOptions = KeyboardOptions.Default.copy(
+                                            capitalization = KeyboardCapitalization.Sentences,
+                                            imeAction = ImeAction.Search
+                                        ),
+                                        keyboardActions = KeyboardActions(onSearch = {
+                                            focusManager.clearFocus()
+                                            searchListener(state.getValue())
+                                            softwareKeyboardController?.hide()
+                                        }),
+                                        cursorBrush = SolidColor(MaterialTheme.colors.onPrimary)
+                                    )
+                                    LaunchedEffect(isShowSearch) {
+                                        requester.requestFocus()
+                                    }
+                                } else {
+                                    Text(
+                                        fontSize = TextUnit.Unspecified,
+                                        text = title,
+                                        color = MaterialTheme.colors.onPrimary
+                                    )
+                                }
+                            } ?: run {
+                                Column(
+                                    modifier = Modifier
+                                        .padding(end = if (icon == null) 12.dp else 0.dp)
+                                        .fillMaxWidth(),
+                                ) {
+                                    Text(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        textAlign = TextAlign.Start,
+                                        text = title,
+                                        style = MaterialTheme.typography.h6,
+                                    )
+                                }
+                            }
+                        }
+                    },
+                    navigationIcon = icon?.let {
+                        {
+                            IconButton(onClick = navigationIconOnClick) {
+                                Icon(
+                                    imageVector = icon,
+                                    contentDescription = contentDescription,
+                                    tint = MaterialTheme.colors.onPrimary
                                 )
                             }
-                            BasicTextField(
-                                singleLine = true,
-                                value = state.text,
-                                onValueChange = { state.text = it },
-                                modifier = Modifier
-                                    .focusRequester(requester)
-                                    .fillMaxWidth()
-                                    .onFocusChanged { focusState ->
-                                        if (focusState.isFocused) {
-                                            state.positionToEnd()
-                                        }
-                                    },
-                                textStyle = MaterialTheme.typography.h6.merge(TextStyle(color = Color.White)),
-                                keyboardOptions = KeyboardOptions.Default.copy(
-                                    capitalization = KeyboardCapitalization.Sentences,
-                                    imeAction = ImeAction.Search
-                                ),
-                                keyboardActions = KeyboardActions(onSearch = {
-                                    focusManager.clearFocus()
-                                    searchListener(state.getValue())
+                        }
+                    },
+                    actions = {
+                        searchListener?.let {
+                            IconButton(onClick = {
+                                state.clear()
+                                isShowSearch = !isShowSearch
+                                if (!isShowSearch) {
+                                    searchListener(null)
                                     softwareKeyboardController?.hide()
-                                }),
-                                cursorBrush = SolidColor(Color.White)
-                            )
-                            LaunchedEffect(isShowSearch) {
-                                requester.requestFocus()
+                                    requester.freeFocus()
+                                }
+                            }) {
+                                if (isShowSearch) {
+                                    Icon(
+                                        imageVector = Icons.Default.Close,
+                                        contentDescription = "Search",
+                                        tint = MaterialTheme.colors.onPrimary
+                                    )
+                                } else {
+                                    Icon(
+                                        imageVector = Icons.Default.Search,
+                                        contentDescription = "Search",
+                                        tint = MaterialTheme.colors.onPrimary
+                                    )
+                                }
                             }
-                        } else {
-                            Text(
-                                fontSize = TextUnit.Unspecified,
-                                text = label,
-                                color = Color.White
+                        }
+                        actions?.invoke(this)
+                        if (isLoaderShow) {
+                            Loader(
+                                modifier = Modifier
+                                    .width(56.dp)
                             )
                         }
                     }
-                },
-                navigationIcon = icon?.let {
-                    {
-                        IconButton(onClick = navigationIconOnClick) {
-                            Icon(
-                                imageVector = icon,
-                                contentDescription = contentDescription,
-                                tint = Color.White
-                            )
-                        }
-                    }
-                },
-                actions = {
-                    IconButton(onClick = {
-                        state.clear()
-                        isShowSearch = !isShowSearch
-                        if (!isShowSearch) {
-                            searchListener(null)
-                            softwareKeyboardController?.hide()
-                            requester.freeFocus()
-                        }
-                    }) {
-                        if (isShowSearch) {
-                            Icon(
-                                imageVector = Icons.Default.Close,
-                                contentDescription = "Search",
-                                tint = Color.White
-                            )
-                        } else {
-                            Icon(
-                                imageVector = Icons.Default.Search,
-                                contentDescription = "Search",
-                                tint = Color.White
-                            )
-                        }
-                    }
-                    actions?.invoke(this)
-                    if (isLoaderShow) {
-                        Loader()
-                    }
-                }
-            )
-        },
+                )
+            }
+        } ?: {},
         content = {
-            Box {
+            Box(
+                modifier = Modifier
+                    .padding(it)
+            ) {
                 content.invoke(it)
                 contentFloatingActionButton?.let {
                     FloatingActionButton(
@@ -173,8 +214,8 @@ fun MainScaffold(
 @Composable
 fun PreviewMainScaffold() {
     KChatTheme {
-        Surface {
-            MainScaffold {}
-        }
+        MainScaffold(
+            title = "Title"
+        ) {}
     }
 }
