@@ -14,9 +14,8 @@
  * limitations under the License.
  */
  
-package com.keygenqt.kchat.modules.guest.ui.events
+package com.keygenqt.kchat.modules.user.chat.ui.events
 
-sealed class SignUpEvents {
-    data class SignUp(val email: String, val password: String) : SignUpEvents()
-    object NavigateBack : SignUpEvents()
+sealed class ViewChatEvents {
+    object NavigateBack : ViewChatEvents()
 }

@@ -14,9 +14,16 @@
  * limitations under the License.
  */
  
-package com.keygenqt.kchat.modules.guest.ui.events
+package com.keygenqt.kchat.data.models
 
-sealed class SignUpEvents {
-    data class SignUp(val email: String, val password: String) : SignUpEvents()
-    object NavigateBack : SignUpEvents()
-}
+import androidx.compose.runtime.Immutable
+import com.keygenqt.kchat.R
+
+@Immutable
+data class MessageModel(
+    val author: String,
+    val content: String,
+    val timestamp: String,
+    val image: Int? = null,
+    val authorImage: Int = if (author == "me") R.drawable.ali else R.drawable.someone_else
+)

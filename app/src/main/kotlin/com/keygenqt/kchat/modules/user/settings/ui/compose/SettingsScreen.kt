@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+ 
 package com.keygenqt.kchat.modules.user.settings.ui.compose
 
 import android.content.res.Configuration
@@ -36,8 +36,7 @@ import com.keygenqt.kchat.modules.user.settings.ui.viewModels.SettingsViewModel
 import com.keygenqt.kchat.theme.KChatTheme
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-@ExperimentalComposeUiApi
-@ExperimentalCoroutinesApi
+@OptIn(ExperimentalCoroutinesApi::class)
 @Composable
 fun SettingsScreen(
     viewModel: SettingsViewModel,
@@ -48,7 +47,6 @@ fun SettingsScreen(
     )
 }
 
-@ExperimentalComposeUiApi
 @Composable
 fun SettingsBody(
     onNavigationEvent: (SettingsEvents) -> Unit = {},
@@ -72,7 +70,6 @@ fun SettingsBody(
     }
 }
 
-@ExperimentalComposeUiApi
 @Preview("Light")
 @Preview("Dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable

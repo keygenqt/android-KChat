@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package com.keygenqt.kchat.modules.user.chat.ui.compose
+ 
+package com.keygenqt.kchat.modules.user.chat.ui.compose.listChats
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background
@@ -29,25 +29,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.paging.ExperimentalPagingApi
-import androidx.paging.LoadState
-import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.collectAsLazyPagingItems
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import com.keygenqt.kchat.R
 import com.keygenqt.kchat.data.models.ChatModel
-import com.keygenqt.kchat.modules.common.ui.compose.CommonList
-import com.keygenqt.kchat.modules.common.ui.compose.MainOptionalMenu
-import com.keygenqt.kchat.modules.common.ui.compose.MainScaffold
-import com.keygenqt.kchat.modules.user.chat.data.mock.mockChatModel
+import com.keygenqt.kchat.data.mock.mockChatModel
 import com.keygenqt.kchat.modules.user.chat.ui.events.ListChatsEvents
-import com.keygenqt.kchat.modules.user.chat.ui.viewModels.ChatViewModel
 import com.keygenqt.kchat.theme.KChatTheme
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @Composable
 fun ListChatsScreenItem(

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+ 
 package com.keygenqt.kchat.modules.user.chat.ui.viewModels
 
 import androidx.lifecycle.ViewModel
@@ -31,19 +31,15 @@ import com.keygenqt.kchat.utils.ConstantsPaging
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-@ExperimentalCoroutinesApi
 class ChatViewModel @Inject constructor(
     private val apiService: ApiServiceChat,
-    private val data: DataServiceChat,
+    private val dataService: DataServiceChat,
 ) : ViewModel() {
 
     private val _createChatSuccess: MutableStateFlow<Boolean?> = MutableStateFlow(null)
@@ -56,12 +52,12 @@ class ChatViewModel @Inject constructor(
         ChatsPageSource(_search.value, apiService)
     }.flow.cachedIn(viewModelScope)
 
-    @ExperimentalPagingApi
+    @OptIn(ExperimentalPagingApi::class)
     val listChats: Flow<PagingData<ChatModel>> = Pager(
         config = PagingConfig(pageSize = ConstantsPaging.PAGE_LIMIT),
-        remoteMediator = ChatsRemoteMediator(data, apiService)
+        remoteMediator = ChatsRemoteMediator(dataService, apiService)
     ) {
-        data.pagingListChats()
+        dataService.pagingListChats()
     }.flow
 
     fun search(search: String?) {
@@ -83,5 +79,9 @@ class ChatViewModel @Inject constructor(
                     _createChatSuccess.value = null
                 }
         }
+    }
+
+    fun getModel(id: Int): Flow<ChatModel?> {
+        return dataService.getChat(id).distinctUntilChanged()
     }
 }

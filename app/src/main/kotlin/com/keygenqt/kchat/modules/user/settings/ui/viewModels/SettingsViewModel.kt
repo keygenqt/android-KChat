@@ -18,9 +18,7 @@ package com.keygenqt.kchat.modules.user.settings.ui.viewModels
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 
 @HiltViewModel
-@ExperimentalCoroutinesApi
 class SettingsViewModel @Inject constructor() : ViewModel()

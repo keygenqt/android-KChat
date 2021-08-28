@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+ 
 package com.keygenqt.kchat.modules.guest.ui.viewModels
 
 import androidx.lifecycle.ViewModel
@@ -31,7 +31,6 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 @HiltViewModel
-@ExperimentalCoroutinesApi
 class GuestViewModel @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
     private val preferences: AppSharedPreferences,

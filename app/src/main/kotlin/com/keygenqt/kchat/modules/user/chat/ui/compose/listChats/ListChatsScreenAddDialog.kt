@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package com.keygenqt.kchat.modules.user.chat.ui.compose
+ 
+package com.keygenqt.kchat.modules.user.chat.ui.compose.listChats
 
 import android.content.Context
 import android.content.res.Configuration
@@ -43,7 +43,7 @@ import com.keygenqt.kchat.theme.KChatTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-@ExperimentalComposeUiApi
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ListChatsScreenAddDialog(
     createChatSuccess: Boolean? = null,
@@ -142,7 +142,6 @@ fun ListChatsScreenAddDialog(
     }
 }
 
-@ExperimentalComposeUiApi
 @Preview("Light")
 @Preview("Dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable

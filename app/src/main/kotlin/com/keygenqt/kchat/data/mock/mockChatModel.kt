@@ -14,9 +14,13 @@
  * limitations under the License.
  */
  
-package com.keygenqt.kchat.modules.guest.ui.events
+package com.keygenqt.kchat.data.mock
 
-sealed class SignUpEvents {
-    data class SignUp(val email: String, val password: String) : SignUpEvents()
-    object NavigateBack : SignUpEvents()
-}
+import com.keygenqt.kchat.data.models.ChatModel
+
+fun mockChatModel() = ChatModel(
+    id = 1,
+    userId = "admin",
+    name = "Chat name",
+    dateUpdated = System.currentTimeMillis(),
+)

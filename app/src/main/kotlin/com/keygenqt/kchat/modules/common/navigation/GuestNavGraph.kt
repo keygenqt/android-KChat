@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+ 
 package com.keygenqt.kchat.modules.common.navigation
 
 import android.widget.Toast
 import androidx.compose.runtime.*
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -36,8 +35,7 @@ import com.keygenqt.kchat.modules.guest.ui.events.WelcomeEvents
 import com.keygenqt.kchat.modules.guest.ui.viewModels.GuestViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-@ExperimentalComposeUiApi
-@ExperimentalCoroutinesApi
+@OptIn(ExperimentalCoroutinesApi::class)
 @Composable
 fun GuestNavGraph(navController: NavHostController) {
 
@@ -74,10 +72,7 @@ fun GuestNavGraph(navController: NavHostController) {
             composable(GuestNavScreen.SignUp.route) {
                 SignUpScreen(viewModel) { event ->
                     when (event) {
-                        is SignUpEvents.SignUp -> viewModel.signUp(
-                            event.email,
-                            event.password
-                        ) {
+                        is SignUpEvents.SignUp -> viewModel.signUp(event.email, event.password) {
                             localBaseViewModel.startUser()
                         }
                         is SignUpEvents.NavigateBack -> navActions.upPress.invoke()

@@ -13,77 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package com.keygenqt.kchat.modules.user.chat.ui.compose
+ 
+package com.keygenqt.kchat.modules.user.chat.ui.compose.listChats
 
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Snackbar
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.collectAsLazyPagingItems
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.keygenqt.kchat.R
-import com.keygenqt.kchat.base.LocalBaseViewModel
 import com.keygenqt.kchat.data.models.ChatModel
 import com.keygenqt.kchat.modules.common.ui.compose.CommonList
 import com.keygenqt.kchat.modules.common.ui.compose.MainOptionalMenu
 import com.keygenqt.kchat.modules.common.ui.compose.MainScaffold
 import com.keygenqt.kchat.modules.user.chat.ui.events.ListChatsEvents
-import com.keygenqt.kchat.modules.user.chat.ui.viewModels.ChatViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-@ExperimentalComposeUiApi
-@ExperimentalPagingApi
-@ExperimentalCoroutinesApi
-@Composable
-fun ListChatsScreen(
-    viewModel: ChatViewModel,
-    onNavigationEvent: (ListChatsEvents) -> Unit = {},
-) {
-    val search: String? by viewModel.search.collectAsState()
-    val isShowSnackBar: Boolean by LocalBaseViewModel.current.showSnackBar.collectAsState()
-    val items: LazyPagingItems<ChatModel> = viewModel.listChats.collectAsLazyPagingItems()
-    val searchItems: LazyPagingItems<ChatModel> = viewModel.searchListChats.collectAsLazyPagingItems()
-    val createChatSuccess: Boolean? by viewModel.createChatSuccess.collectAsState()
-
-    Box {
-        ListChatsBody(
-            items = items,
-            search = search,
-            searchItems = searchItems,
-            createChatSuccess = createChatSuccess,
-            onNavigationEvent = onNavigationEvent,
-        )
-        if (isShowSnackBar) {
-            Snackbar(
-                modifier = Modifier
-                    .padding(16.dp)
-                    .align(Alignment.BottomStart)
-            ) {
-                Text(text = stringResource(id = R.string.common_exit))
-            }
-        }
-    }
-}
-
-@ExperimentalComposeUiApi
 @Composable
 fun ListChatsBody(
     search: String?,
@@ -107,7 +66,6 @@ fun ListChatsBody(
 
     Box {
         MainScaffold(
-            icon = null,
             title = stringResource(id = R.string.list_chats_title),
             contentFloatingActionButton = {
                 Icon(Icons.Filled.Add, "Add")
@@ -170,4 +128,3 @@ fun ListChatsBody(
         )
     }
 }
-

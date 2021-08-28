@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+ 
 package com.keygenqt.kchat.modules.common.ui.compose
 
 import android.content.res.Configuration
@@ -50,12 +50,12 @@ import com.keygenqt.kchat.R
 import com.keygenqt.kchat.modules.common.ui.form.states.StateSimpleEditText
 import com.keygenqt.kchat.theme.KChatTheme
 
-@ExperimentalComposeUiApi
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun MainScaffold(
     title: String? = null,
     isLoaderShow: Boolean = false,
-    icon: ImageVector? = Icons.Filled.ArrowBack,
+    icon: ImageVector? = null,
     navigationIconOnClick: () -> Unit = {},
     elevation: Dp = AppBarDefaults.TopAppBarElevation,
     contentDescription: String = stringResource(R.string.common_navigate_up),
@@ -208,7 +208,6 @@ fun MainScaffold(
     )
 }
 
-@ExperimentalComposeUiApi
 @Preview("Light")
 @Preview("Dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable

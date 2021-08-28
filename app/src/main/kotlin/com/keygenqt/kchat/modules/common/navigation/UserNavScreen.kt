@@ -19,4 +19,8 @@ package com.keygenqt.kchat.modules.common.navigation
 sealed class UserNavScreen(val route: String) {
     object ListChats : UserNavScreen("ListChats")
     object Settings : UserNavScreen("Settings")
+    object ViewChat : UserNavScreen("ViewChat") {
+        const val routeWithArgument: String = "ViewChat/{id}"
+        const val argument0: String = "id"
+    }
 }

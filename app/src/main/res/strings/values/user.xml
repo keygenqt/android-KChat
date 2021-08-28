@@ -6,4 +6,23 @@
 
     <!-- Settings -->
     <string name="settings_title">Settings</string>
+
+    <!-- ViewChat -->
+    <string name="view_chat_author_me">me</string>
+    <string name="view_chat_attached_image">Attached image</string>
+    <string name="view_chat_jumpBottom">Jump to bottom</string>
+    <string name="view_chat_not_available">Functionality currently not available</string>
+    <string name="view_chat_not_available_subtitle">Grab a beverage and check back later!</string>
+    <string name="view_chat_emoji_selector_bt_desc">Show Emoji selector</string>
+    <string name="view_chat_dm_desc">Direct Message</string>
+    <string name="view_chat_attach_photo_desc">Attach Photo</string>
+    <string name="view_chat_map_selector_desc">Location selector</string>
+    <string name="view_chat_videochat_desc">Start videochat</string>
+    <string name="view_chat_send">Send</string>
+    <string name="view_chat_textfield_desc">Text input</string>
+    <string name="view_chat_textfield_hint">Message #composers</string>
+    <string name="view_chat_emoji_selector_desc">Emoji selector</string>
+    <string name="view_chat_emojis_label">Emojis</string>
+    <string name="view_chat_stickers_label">Stickers</string>
+
 </resources>

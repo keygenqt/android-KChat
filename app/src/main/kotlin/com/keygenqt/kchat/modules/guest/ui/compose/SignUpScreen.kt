@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+ 
 package com.keygenqt.kchat.modules.guest.ui.compose
 
 import android.content.res.Configuration
@@ -51,8 +51,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-@ExperimentalComposeUiApi
-@ExperimentalCoroutinesApi
+@OptIn(ExperimentalCoroutinesApi::class)
 @Composable
 fun SignUpScreen(
     viewModel: GuestViewModel,
@@ -68,7 +67,6 @@ fun SignUpScreen(
     )
 }
 
-@ExperimentalComposeUiApi
 @Composable
 fun SignUpBody(
     loading: Boolean = false,
@@ -112,7 +110,7 @@ fun SignUpBody(
     }
 }
 
-@ExperimentalComposeUiApi
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SignUpForm(
     loading: Boolean = false,
@@ -182,13 +180,11 @@ fun SignUpForm(
     LaunchedEffect(Unit) {
         scope.launch {
             delay(10)
-            onNavigationEvent(SignUpEvents.ClearViewModel)
             requesterFieldEmail.requestFocus()
         }
     }
 }
 
-@ExperimentalComposeUiApi
 @Preview("Light")
 @Preview("Dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable

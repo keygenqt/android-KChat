@@ -69,6 +69,9 @@ android {
             }
         }
     }
+    kotlinOptions {
+        freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
+    }
 }
 
 dependencies {

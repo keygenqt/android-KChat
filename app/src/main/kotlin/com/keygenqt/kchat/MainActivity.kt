@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+ 
 package com.keygenqt.kchat
 
 import android.graphics.Color
@@ -23,6 +23,8 @@ import android.view.ViewTreeObserver
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
@@ -36,6 +38,7 @@ import com.keygenqt.kchat.modules.common.navigation.GuestNavGraph
 import com.keygenqt.kchat.modules.common.navigation.UserNavGraph
 import com.keygenqt.kchat.modules.common.navigation.UserNavScreen.ListChats
 import com.keygenqt.kchat.modules.common.ui.viewModels.ViewModelMain
+import com.keygenqt.kchat.modules.user.chat.ui.compose.viewChat.LocalBackPressedDispatcher
 import com.keygenqt.kchat.theme.KChatTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -47,16 +50,16 @@ class MainActivity : ComponentActivity() {
 
     private lateinit var navController: NavHostController
 
-    @ExperimentalPagingApi
-    @ExperimentalComposeUiApi
-    @ExperimentalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // set graph user/guest
         setContent {
             navController = rememberNavController()
-            CompositionLocalProvider(LocalBaseViewModel provides viewModel) {
+            CompositionLocalProvider(
+                LocalBaseViewModel provides viewModel,
+                LocalBackPressedDispatcher provides this.onBackPressedDispatcher
+            ) {
                 KChatTheme {
                     // change status bar color
                     this@MainActivity.window.statusBarColor = MaterialTheme.colors.primaryVariant.toArgb()
